@@ -108,7 +108,7 @@ set_instance_assignment -name ALLOW_SYNCH_CTRL_USAGE OFF -to *|SDRAM_*
 #============================================================
 # SPI SD
 #============================================================
-##set_location_assignment PIN_AE15 -to SD_SPI_CS
+#set_location_assignment PIN_AE15 -to SD_SPI_CS
 set_location_assignment PIN_AH8  -to SD_SPI_MISO
 set_location_assignment PIN_AG8  -to SD_SPI_CLK
 set_location_assignment PIN_U13  -to SD_SPI_MOSI

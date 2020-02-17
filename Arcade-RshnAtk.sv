@@ -67,15 +67,14 @@ module emu
 	// 1 - D-/TX
 	// 2..6 - USR2..USR6
 	// Set USER_OUT to 1 to read from USER_IN.
-	output	      USER_MODE,
+    output	      USER_MODE,	
 	input   [7:0] USER_IN,
 	output  [7:0] USER_OUT
 );	
 
 assign VGA_F1    = 0;
-//assign USER_OUT  = '1;
-
 wire   joy_split, joy_mdsel;
+
 wire   [5:0] joy_in = {USER_IN[6],USER_IN[3],USER_IN[5],USER_IN[7],USER_IN[1],USER_IN[2]};
 assign USER_OUT  = |status[31:30] ? {3'b111,joy_split,3'b111,joy_mdsel} : '1;
 assign USER_MODE = |status[31:30] ;
@@ -94,7 +93,7 @@ localparam CONF_STR = {
    "-;",
 	"H0O1,Aspect Ratio,Original,Wide;",
 	"O35,Scandoubler Fx,None,HQ2x,CRT 25%,CRT 50%,CRT 75%;",
-	"OUV,Serial SNAC DB9MD,Off,1 Player,2 Players;",
+    "OUV,Serial SNAC DB9MD,Off,1 Player,2 Players;",	
 	"-;",
 	"O89,Lives,2,3,5,7;",
 	"OAB,Extend,20k/ev.60k,30k/ev.70k,40k/ev.80k,50k/ev.90k;",
@@ -151,14 +150,14 @@ wire  [7:0] ioctl_dout;
 wire [10:0] ps2_key;
 wire [15:0] joystk1_USB, joystk2_USB;
 
-wire [21:0] gamma_bus;
+wire [21:0]	gamma_bus;
 
 wire [15:0] joystk1 = |status[31:30] ? {
-	joydb9md_1[8] | joydb9md_1[11] | (joydb9md_1[7] & joydb9md_1[6]),// Mode | Z | Start + A -> Coin
-	joydb9md_1[10],// _start_2	-> Y (dummy)
+	joydb9md_1[11] | joydb9md_1[8] | (joydb9md_1[7] & joydb9md_1[4]),// Mode | Z | Start + A -> Coin
+	joydb9md_1[9], // _start_2	-> Y (dummy)
 	joydb9md_1[7], // _start_1  -> Start
-	joydb9md_1[5], // btn_fireB -> C
-	joydb9md_1[4], // btn_fireA -> B
+	joydb9md_1[6], // btn_fireB -> C
+	joydb9md_1[5], // btn_fireA -> B
 	joydb9md_1[3], // btn_up	-> U
 	joydb9md_1[2], // btn_down 	-> D
 	joydb9md_1[1], // btn_left 	-> L
@@ -167,11 +166,11 @@ wire [15:0] joystk1 = |status[31:30] ? {
 	: joystk1_USB;
 
 wire [15:0] joystk2 =  status[31]    ? {
-	joydb9md_2[8] | joydb9md_2[11] | (joydb9md_2[7] & joydb9md_2[6]),// Mode | Z | Start + A -> Coin
-	joydb9md_2[7], // _start_2  -> Start
-	joydb9md_2[10],// _start_1 -> Y (dummy)
-	joydb9md_2[5], // btn_fireB -> C
-	joydb9md_2[4], // btn_fireA -> B
+	joydb9md_2[11] | joydb9md_2[8] | (joydb9md_2[7] & joydb9md_2[4]),// Mode | Z | Start + A -> Coin
+	joydb9md_2[7], // _start_1  -> Y (dummy)
+	joydb9md_2[9], // _start_2 -> Start
+	joydb9md_2[6], // btn_fireB -> C
+	joydb9md_2[5], // btn_fireA -> B
 	joydb9md_2[3], // btn_up	-> U
 	joydb9md_2[2], // btn_down 	-> D
 	joydb9md_2[1], // btn_left 	-> L
@@ -189,8 +188,6 @@ joy_db9md joy_db9md
   .joystick1 ( joydb9md_1 ),
   .joystick2 ( joydb9md_2 )	  
 );
-
-
 
 hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
 (

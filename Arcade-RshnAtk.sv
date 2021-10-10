@@ -167,7 +167,7 @@ assign {UART_RTS, UART_TXD, UART_DTR} = 0;
 
 assign VGA_F1    = 0;
 assign VGA_SCALER= 0;
-assign USER_OUT  = '1;
+//assign USER_OUT  = '1;
 wire         CLK_JOY = CLK_50M;         //Assign clock between 40-50Mhz
 wire   [2:0] JOY_FLAG  = {status[30],status[31],status[29]}; //Assign 3 bits of status (31:29) o (63:61)
 wire         JOY_CLK, JOY_LOAD, JOY_SPLIT, JOY_MDSEL;

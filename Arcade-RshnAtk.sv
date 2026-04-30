@@ -251,7 +251,6 @@ localparam CONF_STR = {
 	"P1OQ,Dim video after 10s,On,Off;",
 	"-;",
 	"DIP;",
-	"OT,UserIO Players, 1 Player,2 Players;",	
 	"-;",
 	"-;",
 	"R0,Reset;",
